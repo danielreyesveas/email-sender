@@ -27,6 +27,7 @@ def run_queue():
         if(email_error):
             logger.debug('Resending, email %s', email_error.pk)
             email_error.status = 'pending'
+            email_error.save()
             run_queue()
 
     
