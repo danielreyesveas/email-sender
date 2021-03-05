@@ -55,15 +55,18 @@ class EmailQueue(models.Model):
         self.status = 'sending'
         self.save()
 
-        BaseMailer(
-            subject=self.subject,
-            content=self.content,
-            email_from=self.email_from,
-            email_to=[self.email_to],
-            template=self.template.filename
-        ).send_email()
+        try:
+            BaseMailer(
+                subject=self.subject,
+                content=self.content,
+                email_from=self.email_from,
+                email_to=[self.email_to],
+                template=self.template.filename
+            ).send_email()
+            self.status = 'sent'    
+        except Exception as e:
+            self.status = 'error'    
 
-        self.status = 'sent'
         self.save()
         return
 
@@ -90,5 +93,5 @@ class BaseMailer():
             )            
             return True
         except Exception as e:
-            logger.error('Error at %s', 'register view', exc_info=e)            
-            return False
+            logger.info('Error at %s', 'register view', exc_info=e)            
+            return e

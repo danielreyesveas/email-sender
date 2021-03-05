@@ -12,6 +12,11 @@ def run_queue():
         logger.debug('Rescheduling, email %s is sending.', email_sending.pk)
         run_queue()
     else:
+        email_queues = EmailQueue.objects.filter(status='pending').count()
+
+        if(email_queues > 1):
+            run_queue()
+        
         email_queue = EmailQueue.objects.filter(status='pending').first()
 
         if(email_queue):
@@ -22,12 +27,12 @@ def run_queue():
             except Exception as e:
                 logger.error('Error sending %s', email_queue.pk, exc_info=e)
 
-        email_error = EmailQueue.objects.filter(status='error').first()
+    email_error = EmailQueue.objects.filter(status='error').first()
 
-        if(email_error):
-            logger.debug('Resending, email %s', email_error.pk)
-            email_error.status = 'pending'
-            email_error.save()
-            run_queue()
+    if(email_error):
+        logger.debug('Resending, email %s', email_error.pk)
+        email_error.status = 'pending'
+        email_error.save()
+        run_queue()        
 
     
