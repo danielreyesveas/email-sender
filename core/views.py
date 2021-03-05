@@ -6,6 +6,8 @@ from django.views.decorators.csrf import csrf_exempt
 from .utils import api_response                                    
 from .models import EmailQueue, Template
 
+from .tasks import run_queue
+
 def home(request):
     return HttpResponse("Hello friend...")
 
@@ -64,6 +66,8 @@ def add_email(request):
 
         json_response['success'] = True
 
+        run_queue()
+
         return api_response(json_response)
     except Exception as e:
         json_response['msg'] = 'Hubo un problema'
@@ -71,15 +75,14 @@ def add_email(request):
         
         return api_response(json_response)
 
-def run_queue(request):
-    email_queue = EmailQueue.objects.filter(status='pending').first()
+# def run_queue(request):
+#     email_queue = EmailQueue.objects.filter(status='pending').first()
 
-    if(email_queue):
-        try:
-            email_queue.send()           
-            return HttpResponse(email_queue.pk)
-        except Exception as e:
-            logger.error('Error at %s', 'register view', exc_info=e)
-            return api_response({'errors': e}, status=400)
+#     if(email_queue):
+#         try:
+#             email_queue.send()           
+#             return HttpResponse(email_queue.pk)
+#         except Exception as e:
+#             return api_response({'errors': e}, status=400)
 
-    return api_response({'msg': 'Cola vacía.'}, status=400)
+#     return api_response({'msg': 'Cola vacía.'}, status=400)
