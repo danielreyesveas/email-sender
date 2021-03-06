@@ -38,6 +38,7 @@ class EmailQueue(models.Model):
 
     template = models.ForeignKey(Template, on_delete=models.CASCADE, related_name='emails')
     email_from = models.CharField(max_length=255)
+    email_name = models.CharField(max_length=255, blank=True, null=True)
     email_to = models.CharField(max_length=255)
     subject = models.CharField(max_length=255)
     content = models.TextField()
@@ -60,19 +61,23 @@ class EmailQueue(models.Model):
                 subject=self.subject,
                 content=self.content,
                 email_from=self.email_from,
+                email_name=self.email_name,
                 email_to=[self.email_to],
                 template=self.template.filename
             ).send_email()
+
             self.status = 'sent'    
         except Exception as e:
             self.status = 'error'    
 
         self.save()
+
         return
 
 class BaseMailer():
-    def __init__(self, email_from, email_to, subject, content, template, html_content=""):
+    def __init__(self, email_from, email_to, subject, content, template, email_name=None, html_content=""):
         self.email_from = email_from
+        self.email_name = email_name
         self.email_to = email_to
         self.subject = subject
         self.content = content
@@ -81,7 +86,7 @@ class BaseMailer():
         
     def send_email(self):
         try:
-            context = {"from": self.email_from, "subject": self.subject, "content": self.content}
+            context = {"from": self.email_from, "name": self.email_name, "subject": self.subject, "content": self.content}
             self.html_content = render_to_string(self.template, context)
             send_mail(
                 subject=self.subject,

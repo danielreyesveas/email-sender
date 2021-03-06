@@ -45,6 +45,11 @@ def add_email(request):
         email_to = data['to']
         content = data['content']
 
+        if('name' in data): 
+            email_name = data['name']
+        else:
+            email_name = None
+
         try:
             template = Template.objects.get(slug=data['template'])
         except Template.DoesNotExist:
@@ -57,6 +62,7 @@ def add_email(request):
         email_queue = EmailQueue.objects.create(
             template=template, 
             email_from=email_from, 
+            email_name=email_name, 
             email_to=email_to, 
             subject=subject, 
             content=content
