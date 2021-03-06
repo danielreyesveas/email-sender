@@ -8,6 +8,7 @@ click-repl==0.1.6
 Django==2.2
 django-background-tasks==1.2.5
 django-compat==1.0.15
+django-cors-headers==3.7.0
 dnspython==2.1.0
 greenlet==1.0.0
 kombu==4.6.11
