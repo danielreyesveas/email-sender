@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt      
 from .utils import api_response                                    
 from .models import EmailQueue, Template
+from .constants import default_recipients
 
 from .tasks import run_queue
 
@@ -30,28 +31,29 @@ def add_email(request):
         elif('from' not in data): 
             json_response['msg'] = 'El campo \'from\' no puede estar vacío' 
             return api_response(json_response)
-        elif('to' not in data): 
-            json_response['msg'] = 'El campo \'to\' no puede estar vacío' 
-            return api_response(json_response)
         elif('content' not in data): 
             json_response['msg'] = 'El campo \'content\' no puede estar vacío' 
             return api_response(json_response)
-        elif('template' not in data): 
-            json_response['msg'] = 'El campo \'template\' no puede estar vacío' 
+        elif('template_slug' not in data): 
+            json_response['msg'] = 'El campo \'template_slug\' no puede estar vacío' 
             return api_response(json_response)
         
         subject = data['subject']
         email_from = data['from']
-        email_to = data['to']
         content = data['content']
 
         if('name' in data): 
             email_name = data['name']
         else:
             email_name = None
+        
+        if('to' in data): 
+            email_to = data['to']
+        else:
+            email_to = default_recipients
 
         try:
-            template = Template.objects.get(slug=data['template'])
+            template = Template.objects.get(slug=data['template_slug'])
         except Template.DoesNotExist:
             template = None
 

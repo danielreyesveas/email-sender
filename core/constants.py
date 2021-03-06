@@ -1,0 +1,1 @@
+default_recipients =  "reciclatusanimales@gmail.com"
