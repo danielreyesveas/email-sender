@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'background_task',
 
-    'core',
+    'core.apps.CoreConfig',
 ]
 
 MIDDLEWARE = [
@@ -83,13 +83,13 @@ LOGGING = {
             'filename': os.path.join(BASE_DIR, 'debug.log'),
         },
     },
-    'loggers': {
-        'django': {
-            'handlers': ['file'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
-    },    
+    # 'loggers': {
+    #     'django': {
+    #         'handlers': ['file'],
+    #         'level': 'DEBUG',
+    #         'propagate': True,
+    #     },
+    # },    
 }
 
 WSGI_APPLICATION = 'email_sender.wsgi.application'

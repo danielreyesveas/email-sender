@@ -1,6 +1,6 @@
 import logging
+from core.models import EmailQueue
 from background_task import background
-from .models import EmailQueue
 
 logger = logging.getLogger('django')
 
@@ -21,9 +21,9 @@ def run_queue():
 
         if(email_queue):
             try:
-                logger.debug('Sending email %s.', email_queue.pk)
+                logger.info('Sending email %s.', email_queue.pk)
                 email_queue.send()           
-                logger.debug('Email %s sent.', email_queue.pk)
+                logger.info('Email %s sent.', email_queue.pk)
             except Exception as e:
                 logger.error('Error sending %s', email_queue.pk, exc_info=e)
 

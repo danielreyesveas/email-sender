@@ -82,15 +82,3 @@ def add_email(request):
         json_response['error'] = e
         
         return api_response(json_response)
-
-# def run_queue(request):
-#     email_queue = EmailQueue.objects.filter(status='pending').first()
-
-#     if(email_queue):
-#         try:
-#             email_queue.send()           
-#             return HttpResponse(email_queue.pk)
-#         except Exception as e:
-#             return api_response({'errors': e}, status=400)
-
-#     return api_response({'msg': 'Cola vacía.'}, status=400)

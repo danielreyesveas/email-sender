@@ -3,9 +3,9 @@ import logging
 from django.db import models
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
+import core
 
 logger = logging.getLogger('django')
-
 
 class App(models.Model):
     name = models.CharField(max_length=255)
@@ -25,7 +25,7 @@ class Template(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.name
+        return self.slug
 
 class EmailQueue(models.Model):
     STATUS = [
@@ -53,6 +53,7 @@ class EmailQueue(models.Model):
         return self.subject    
 
     def send(self):
+
         self.status = 'sending'
         self.save()
 
@@ -62,15 +63,19 @@ class EmailQueue(models.Model):
                 content=self.content,
                 email_from=self.email_from,
                 email_name=self.email_name,
-                email_to=[self.email_to],
+                email_to=self.email_to,
                 template=self.template.filename
             ).send_email()
-
             self.status = 'sent'    
-        except Exception as e:
-            self.status = 'error'    
 
+        except Exception as e:
+            self.status = 'error'
+            self.save()
+            core.tasks.run_queue()           
+
+        
         self.save()
+
 
         return
 
@@ -85,18 +90,15 @@ class BaseMailer():
         self.template = 'core/' + template
         
     def send_email(self):
-        try:
-            context = {"from": self.email_from, "name": self.email_name, "subject": self.subject, "content": self.content}
-            self.html_content = render_to_string(self.template, context)
-            send_mail(
-                subject=self.subject,
-                message=self.content,
-                html_message=self.html_content,
-                from_email=self.email_from,
-                recipient_list=[self.email_to],
-                fail_silently=False,
-            )            
-            return True
-        except Exception as e:
-            logger.info('Error at %s', 'register view', exc_info=e)            
-            return e
+        
+        context = {"from": self.email_from, "name": self.email_name, "to": self.email_to, "subject": self.subject, "content": self.content}
+        self.html_content = render_to_string(self.template, context)
+
+        send_mail(
+            subject=self.subject,
+            message=self.content,
+            html_message=self.html_content,
+            from_email=self.email_from,
+            recipient_list=[self.email_to],
+            fail_silently=False,
+        )            
