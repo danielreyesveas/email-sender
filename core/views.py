@@ -24,7 +24,7 @@ def add_email(request):
             return api_response(json_response)
 
         data = json.loads(request.body.decode("utf-8"))
-
+        print(data)
         if('subject' not in data): 
             json_response['msg'] = 'El campo \'subject\' no puede estar vacío' 
             return api_response(json_response)
