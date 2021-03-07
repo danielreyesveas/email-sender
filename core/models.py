@@ -3,6 +3,8 @@ import logging
 from django.db import models
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
+from .constants import default_sender
+
 import core
 
 logger = logging.getLogger('django')
@@ -61,8 +63,8 @@ class EmailQueue(models.Model):
             BaseMailer(
                 subject=self.subject,
                 content=self.content,
-                email_from=self.email_from,
                 email_name=self.email_name,
+                email_from=self.email_from,
                 email_to=self.email_to,
                 template=self.template.filename
             ).send_email()
@@ -98,7 +100,7 @@ class BaseMailer():
             subject=self.subject,
             message=self.content,
             html_message=self.html_content,
-            from_email=self.email_from,
+            from_email=default_sender,
             recipient_list=[self.email_to],
             fail_silently=False,
         )            
