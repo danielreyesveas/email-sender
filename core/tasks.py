@@ -1,20 +1,24 @@
 import logging
 from core.models import EmailQueue
 from background_task import background
+from background_task.models import Task
+
 
 logger = logging.getLogger('django')
 
-@background(schedule=10)
+@background(schedule=5)
 def run_queue():
     email_sending = EmailQueue.objects.filter(status='sending').first()
+    available_tasks = (Task.objects.count() < 10)
 
-    if(email_sending):
+    if(email_sending and available_tasks):
         logger.debug('Rescheduling, email %s is sending.', email_sending.pk)
         run_queue()
+        return
     else:
-        email_queues = EmailQueue.objects.filter(status='pending').count()
+        email_queues = EmailQueue.objects.filter(status='pending').count()        
 
-        if(email_queues > 1):
+        if(email_queues > 1 and available_tasks):
             run_queue()
         
         email_queue = EmailQueue.objects.filter(status='pending').first()
@@ -33,6 +37,8 @@ def run_queue():
         logger.debug('Resending, email %s', email_error.pk)
         email_error.status = 'pending'
         email_error.save()
-        run_queue()        
+
+        if(available_tasks):
+            run_queue()        
 
     

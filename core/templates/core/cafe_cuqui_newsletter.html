@@ -29,7 +29,7 @@
                             <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
                                 <tr>
                                     <td style="color: #153643; font-family: Arial, sans-serif;">
-                                        <h2 style="font-size: 20px; margin: 0;">Nuevo mensaje de {% if name %}{{ name }}{% else %}{{ from }}{% endif %}</h2>
+                                        <h2 style="font-size: 20px; margin: 0;">{% if name %}{{ name }}{% else %}{{ from }}{% endif %} se ha suscrito al contenido de Cuenteros.</h2>
                                     </td>
                                 </tr>
                                 {% if name %}
@@ -38,17 +38,7 @@
                                             <h3 style="font-size: 18px; margin: 0;">{{ from }}</h3>
                                         </td>
                                     </tr>
-                                {% endif %}
-                                <tr>
-                                    <td style="color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 24px; padding: 20px 0 30px 0;">
-                                        <p style="margin: 0;">Asunto: {{ subject }}</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 24px; padding: 20px 0 30px 0;">
-                                        <p style="margin: 0;">{{ content }}</p>
-                                    </td>
-                                </tr>                                
+                                {% endif %}                                     
                             </table>
                         </td>
                     </tr>
@@ -58,7 +48,7 @@
                                 <tr>
                                     <td align="center" style="color: #ffffff; font-family: Arial, sans-serif; font-size: 14px;">
                                         <p style="margin: 0;">&reg; Reciclatusanimales {% now 'Y' %}<br/>
-                                    <a href="https://reciclatusanimales.com" style="color: #ffffff;">Hemiola</a></p>
+                                    <a href="https://reciclatusanimales.com" style="color: #ffffff;">Café Cuqui</a></p>
                                     </td>                                    
                                 </tr>
                             </table>

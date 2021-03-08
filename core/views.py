@@ -14,8 +14,9 @@ def home(request):
 
 @csrf_exempt 
 def add_email(request):
+
     json_response = {
-        'success': False
+        'success': False,
     }
 
     try:
@@ -24,28 +25,37 @@ def add_email(request):
             return api_response(json_response)
 
         data = json.loads(request.body.decode("utf-8"))
-        print(data)
-        if('subject' not in data): 
-            json_response['msg'] = 'El campo \'subject\' no puede estar vacío' 
-            return api_response(json_response)
-        elif('from' not in data): 
-            json_response['msg'] = 'El campo \'from\' no puede estar vacío' 
-            return api_response(json_response)
-        elif('content' not in data): 
-            json_response['msg'] = 'El campo \'content\' no puede estar vacío' 
+        email_name = None
+        subject = None
+        content = None
+        
+        if('type' not in data): 
+            json_response['msg'] = 'El campo \'type\' no puede estar vacío' 
             return api_response(json_response)
         elif('template_slug' not in data): 
             json_response['msg'] = 'El campo \'template_slug\' no puede estar vacío' 
             return api_response(json_response)
+        elif('from' not in data): 
+            json_response['msg'] = 'El campo \'from\' no puede estar vacío' 
+            return api_response(json_response)
+
+        email_type = data['type']
+
+        if(email_type=="contact"):
+            if('subject' not in data): 
+                json_response['msg'] = 'El campo \'subject\' no puede estar vacío' 
+                return api_response(json_response)            
+            elif('content' not in data): 
+                json_response['msg'] = 'El campo \'content\' no puede estar vacío' 
+                return api_response(json_response)    
         
-        subject = data['subject']
+            subject = data['subject']
+            content = data['content']
+        
         email_from = data['from']
-        content = data['content']
 
         if('name' in data): 
             email_name = data['name']
-        else:
-            email_name = None
         
         if('to' in data): 
             email_to = data['to']
@@ -60,6 +70,9 @@ def add_email(request):
         if(template is None): 
             json_response['msg'] = 'La plantilla no existe' 
             return api_response(json_response)
+
+        if(email_type=='newsletter'):
+            subject = template.subject
 
         email_queue = EmailQueue.objects.create(
             template=template, 
