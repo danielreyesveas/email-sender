@@ -20,32 +20,32 @@
 
                 <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse; border: 1px solid #cccccc;">
                     <tr>
-                        <td align="center" bgcolor="#70bbd9" style="padding: 40px 0 30px 0;">
-                            <img src="https://email-sender.reciclatusanimales.com/static/spam.gif" alt="Spam." width="300" height="230" style="display: block;" />
+                        <td align="center" bgcolor="#C3E5DF" style="padding: 0;">
+                            <img src="https://resources.reciclatusanimales.com/gif/portfolio-contact.gif" alt="Portfolio." width="600" height="450" style="display: block;" />
                         </td>
                     </tr>
                     <tr>
                         <td bgcolor="#ffffff" style="padding: 40px 30px 40px 30px;">
                             <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
                                 <tr>
-                                    <td style="color: #153643; font-family: Arial, sans-serif;">
+                                    <td style="color: #153643; font-family: Consolas, monaco, monospace;">
                                         <h2 style="font-size: 20px; margin: 0;">Nuevo mensaje de {% if name %}{{ name }}{% else %}{{ from }}{% endif %}</h2>
                                     </td>
                                 </tr>
                                 {% if name %}
                                     <tr>
-                                        <td style="color: #153643; font-family: Arial, sans-serif;">
+                                        <td style="color: #153643; font-family: Consolas, monaco, monospace;">
                                             <h3 style="font-size: 18px; margin: 0;">{{ from }}</h3>
                                         </td>
                                     </tr>
                                 {% endif %}
                                 <tr>
-                                    <td style="color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 24px; padding: 20px 0 30px 0;">
+                                    <td style="color: #153643; font-family: Consolas, monaco, monospace; font-size: 16px; line-height: 24px; padding: 20px 0 30px 0;">
                                         <p style="margin: 0;">Asunto: {{ subject }}</p>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 24px; padding: 20px 0 30px 0;">
+                                    <td style="color: #153643; font-family: Consolas, monaco, monospace; font-size: 16px; line-height: 24px; padding: 20px 0 30px 0;">
                                         <p style="margin: 0;">{{ content }}</p>
                                     </td>
                                 </tr>                                
@@ -53,12 +53,16 @@
                         </td>
                     </tr>
                     <tr>
-                        <td bgcolor="#ee4c50" style="padding: 30px 30px;">
+                        <td bgcolor="#FF766F" style="padding: 30px 30px;">
                             <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
                                 <tr>
-                                    <td align="center" style="color: #ffffff; font-family: Arial, sans-serif; font-size: 14px;">
-                                        <p style="margin: 0;">&reg; Reciclatusanimales {% now 'Y' %}<br/>
-                                    <a href="https://reciclatusanimales.com" style="color: #ffffff;">Portafolio</a></p>
+                                    <td align="center" style="color: #fff; font-size: 14px;">
+                                        <p style="margin-bottom: 10px; font-family: Consolas, monaco, monospace;">
+                                            <a href="https://reciclatusanimales.com" style="color: #fff; text-decoration: none;">
+                                                <b>💾 Portafolio</b>
+                                            </a>
+                                        </p>
+                                        <p style="margin: 0; font-family: Consolas, monaco, monospace;">©️ Reciclatusanimales {% now 'Y' %}</p>
                                     </td>                                    
                                 </tr>
                             </table>

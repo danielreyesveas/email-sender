@@ -20,21 +20,21 @@
 
                 <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse; border: 1px solid #cccccc;">
                     <tr>
-                        <td align="center" bgcolor="#70bbd9" style="padding: 40px 0 30px 0;">
-                            <img src="https://email-sender.reciclatusanimales.com/static/spam.gif" alt="Spam." width="300" height="230" style="display: block;" />
+                        <td align="center" bgcolor="#E5CEA7" style="padding: 0;">
+                            <img src="https://resources.reciclatusanimales.com/gif/cafe-cuqui-newsletter.gif" alt="Coffee." width="600" height="300" style="display: block;" />
                         </td>
                     </tr>
                     <tr>
                         <td bgcolor="#ffffff" style="padding: 40px 30px 40px 30px;">
                             <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
                                 <tr>
-                                    <td style="color: #153643; font-family: Arial, sans-serif;">
-                                        <h2 style="font-size: 20px; margin: 0;">{% if name %}{{ name }}{% else %}{{ from }}{% endif %} se ha suscrito al contenido de Cuenteros.</h2>
+                                    <td style="color: #333333; font-family: 'Lucida Console', 'Courier New', monospace;">
+                                        <h2 style="font-size: 20px; margin: 0;">{% if name %}{{ name }}{% else %}{{ from }}{% endif %} se ha suscrito al contenido de Café Cuqui.</h2>
                                     </td>
                                 </tr>
                                 {% if name %}
                                     <tr>
-                                        <td style="color: #153643; font-family: Arial, sans-serif;">
+                                        <td style="color: #333333; font-family: 'Lucida Console', 'Courier New', monospace;">
                                             <h3 style="font-size: 18px; margin: 0;">{{ from }}</h3>
                                         </td>
                                     </tr>
@@ -43,13 +43,17 @@
                         </td>
                     </tr>
                     <tr>
-                        <td bgcolor="#ee4c50" style="padding: 30px 30px;">
+                        <td bgcolor="#E5CEA7" style="padding: 30px 30px;">
                             <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
                                 <tr>
-                                    <td align="center" style="color: #ffffff; font-family: Arial, sans-serif; font-size: 14px;">
-                                        <p style="margin: 0;">&reg; Reciclatusanimales {% now 'Y' %}<br/>
-                                    <a href="https://reciclatusanimales.com" style="color: #ffffff;">Café Cuqui</a></p>
-                                    </td>                                    
+                                    <td align="center" style="color: #333333; font-size: 14px;">
+                                        <p style="margin-bottom: 10px; font-family: 'Reenie Beanie', cursive;">
+                                            <a href="https://reciclatusanimales.com" style="color: #333333; text-decoration: none;">
+                                                <b>☕ Café Cuqui</b>
+                                            </a>
+                                        </p>
+                                        <p style="margin: 0; font-family: 'Lucida Console', 'Courier New', monospace;">©️ Reciclatusanimales {% now 'Y' %}</p>
+                                    </td>                                   
                                 </tr>
                             </table>
                         </td>
