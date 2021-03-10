@@ -2,13 +2,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
-from core.views import home, add_email, run_queue
+from core.views import home, send_email
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home),
-    path('add-email', add_email, name="add_email"),
-    path('run-queue', run_queue, name="run_queue"),
+    path('send-email', send_email, name="send_email"),
 ]
 
 if settings.DEBUG:

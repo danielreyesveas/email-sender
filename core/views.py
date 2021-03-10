@@ -13,7 +13,7 @@ def home(request):
     return HttpResponse("Hello friend...")
 
 @csrf_exempt 
-def add_email(request):
+def send_email(request):
 
     json_response = {
         'success': False,

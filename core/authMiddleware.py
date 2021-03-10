@@ -8,6 +8,9 @@ class AuthMiddleware(MiddlewareMixin):
         self.get_response = get_response
 
     def process_request(self, request):
+            if request.path.startswith('/admin/'):
+                return None
+                
             api_key = request.headers.get('Api-Key')
             
             try:
