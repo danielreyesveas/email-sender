@@ -1,4 +1,4 @@
-# 📬 EMAIL SERVICE
+# 📬 Email Service
 This is the backend email service that manage all the [reciclatusanimales.com](https://reciclatusanimales.com) apps email requests.
 
 <div align="center"><img src="https://resources.reciclatusanimales.com/image/email-service.png" width=600></div>
@@ -11,9 +11,8 @@ It is built with [Django](https://www.djangoproject.com/) and [Django Background
 <br />
 
 ## Features 📋
-* Email .
-* API response endpoints.
-* [GraphQL](https://www.apollographql.com/) endpoint.
+* Email queue handler.
+* Configurable autoresponse emails.
 
 <br/>
 ## Setup 🚀
