@@ -1,6 +1,7 @@
 from django.utils.deprecation import MiddlewareMixin
 from django.core.exceptions import PermissionDenied
 from .models import ApiKey
+from django.urls import reverse
 
 class AuthMiddleware(MiddlewareMixin):
 
@@ -8,7 +9,7 @@ class AuthMiddleware(MiddlewareMixin):
         self.get_response = get_response
 
     def process_request(self, request):
-            if request.path.startswith('/admin/'):
+            if(request.path.startswith(reverse('admin:index')) or request.path == reverse('home')):
                 return None
                 
             api_key = request.headers.get('Api-Key')

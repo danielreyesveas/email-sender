@@ -6,7 +6,7 @@ from core.views import home, send_email
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home),
+    path('', home, name="home"),
     path('send-email', send_email, name="send_email"),
 ]
 

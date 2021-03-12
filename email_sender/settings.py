@@ -21,7 +21,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'corsheaders',
-
     'background_task',
 
     'core.apps.CoreConfig',

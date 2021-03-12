@@ -10,6 +10,8 @@ logger = logging.getLogger('django')
 def run_queue():
     email_sending = EmailQueue.objects.filter(status='sending').first()
     available_tasks = (Task.objects.count() < 10)
+    logger.info('Queue running.')
+    print('--Queue running--')
 
     if(email_sending and available_tasks):
         logger.debug('Rescheduling, email %s is sending.', email_sending.pk)
@@ -26,8 +28,10 @@ def run_queue():
         if(email_queue):
             try:
                 logger.info('Sending email %s.', email_queue.pk)
+                print('Sending email {}...'.format(email_queue.pk))
                 email_queue.send()           
                 logger.info('Email %s sent.', email_queue.pk)
+                print('Email {} sent.'.format(email_queue.pk))
             except Exception as e:
                 logger.error('Error sending %s', email_queue.pk, exc_info=e)
 
