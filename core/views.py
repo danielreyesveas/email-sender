@@ -28,6 +28,7 @@ def send_email(request):
         email_name = None
         subject = None
         content = None
+        params = None
         
         if('type' not in data): 
             json_response['msg'] = 'El campo \'type\' no puede estar vacío' 
@@ -56,6 +57,9 @@ def send_email(request):
 
         if('name' in data): 
             email_name = data['name']
+
+        if('params' in data): 
+            params = data['params']
         
         if('to' in data): 
             email_to = data['to']
@@ -80,9 +84,10 @@ def send_email(request):
             email_name=email_name, 
             email_to=email_to, 
             subject=subject, 
-            content=content
+            content=content,
+            params=params
         )
-
+        print(data)
         email_queue.save()
 
         json_response['success'] = True

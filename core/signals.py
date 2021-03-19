@@ -17,6 +17,7 @@ def create_response_email(sender, instance, created, **kwargs):
                 email_name=instance.email_name, 
                 email_to=instance.email_from, 
                 subject=instance.template.response.subject, 
+                params=instance.params, 
                 content=''
             )
 

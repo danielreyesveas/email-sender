@@ -4,6 +4,7 @@ from django.db import models
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from .constants import default_sender, default_recipients
+from django.contrib.postgres.fields import JSONField
 
 import core
 import binascii
@@ -66,6 +67,7 @@ class EmailQueue(models.Model):
     email_to = models.CharField(max_length=255)
     subject = models.CharField(max_length=255, blank=True, null=True)
     content = models.TextField(blank=True, null=True)
+    params = JSONField(blank="True", null="True")
     status = models.CharField(max_length=255, choices=STATUS, default='pending')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -89,7 +91,8 @@ class EmailQueue(models.Model):
                 email_from=self.email_from,
                 email_to=self.email_to,
                 email_subject=self.template.subject,
-                template=self.template.filename
+                template=self.template.filename,
+                params=self.params
             ).send_email()
             self.status = 'sent'    
 
@@ -102,19 +105,20 @@ class EmailQueue(models.Model):
         return
 
 class BaseMailer():
-    def __init__(self, email_from, email_to, email_subject, subject, content, template, email_name, html_content=""):
+    def __init__(self, email_from, email_to, email_subject, subject, content, params, template, email_name, html_content=""):
         self.email_from = email_from
         self.email_name = email_name
         self.email_to = email_to
         self.email_subject = email_subject
         self.subject = subject
         self.content = content
+        self.params = params
         self.html_content = html_content
         self.template = 'core/' + template
         
     def send_email(self):
         
-        context = {"from": self.email_from, "name": self.email_name, "to": self.email_to, "subject": self.subject, "content": self.content}
+        context = {"from": self.email_from, "name": self.email_name, "to": self.email_to, "subject": self.subject, "content": self.content, "params": self.params}
         self.html_content = render_to_string(self.template, context)
 
         email = EmailMessage(
