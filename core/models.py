@@ -92,6 +92,7 @@ class EmailQueue(models.Model):
                 email_to=self.email_to,
                 email_subject=self.template.subject,
                 template=self.template.filename,
+                sender=self.template.sender,
                 params=self.params
             ).send_email()
             self.status = 'sent'    
@@ -105,7 +106,7 @@ class EmailQueue(models.Model):
         return
 
 class BaseMailer():
-    def __init__(self, email_from, email_to, email_subject, subject, content, params, template, email_name, html_content=""):
+    def __init__(self, email_from, email_to, email_subject, subject, content, params, template, email_name, sender=default_sender, html_content=""):
         self.email_from = email_from
         self.email_name = email_name
         self.email_to = email_to
@@ -115,6 +116,7 @@ class BaseMailer():
         self.params = params
         self.html_content = html_content
         self.template = 'core/' + template
+        self.sender = sender
         
     def send_email(self):
         
@@ -124,7 +126,7 @@ class BaseMailer():
         email = EmailMessage(
             self.email_subject,
             self.html_content,
-            default_sender,
+            self.sender,
             [self.email_to],
             [default_recipients]
         )
