@@ -44,6 +44,7 @@ class Template(models.Model):
     name = models.CharField(max_length=255)
     slug = models.CharField(unique=True, max_length=255)
     filename = models.CharField(max_length=255)
+    sender = models.CharField(max_length=255, blank=True, null=True)
     subject = models.CharField(max_length=255, blank=True, null=True)
     response = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
