@@ -51,7 +51,7 @@ def send_email(request):
                 return api_response(json_response)    
         
             subject = data['subject']
-            content = data['content']
+            content = data['content']                
         
         email_from = data['from']
 
